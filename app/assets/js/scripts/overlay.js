@@ -349,7 +349,7 @@ async function populateServerListings(){
 
 async function fetchSkinAndConvertToBase64(username) {
   try {
-    const skinURL = `https://auth.hastastudios.com.br/skin/${username}.png`;
+    const skinURL = `https://crafatar.com/avatars/${username}.png`;
     const response = await fetch(skinURL);
 
     if (!response.ok) {

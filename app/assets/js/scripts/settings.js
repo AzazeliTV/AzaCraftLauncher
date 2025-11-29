@@ -624,7 +624,7 @@ const settingsCurrentMojangAccounts = document.getElementById('settingsCurrentMo
  */
 async function fetchSkinAndConvertToBase64(username) {
   try {
-    const skinURL = `https://auth.hastastudios.com.br/skin/${username}.png`;
+    const skinURL = `https://crafatar.com/avatars/${username}.png`;
     const response = await fetch(skinURL);
 
     if (!response.ok) {
@@ -1577,7 +1577,7 @@ function populateAboutVersionInformation(){
  */
 function populateReleaseNotes(){
     $.ajax({
-        url: 'https://github.com/Shisuiicaro/HastaStudiosLauncher/releases.atom',
+        url: 'https://github.com/AzazeliTV/AzaCraftLauncher/releases.atom',
         success: (data) => {
             const version = 'v' + remote.app.getVersion()
             const entries = $(data).find('entry')

@@ -6,18 +6,18 @@ const { URL }                 = require('url')
 const {
     MojangRestAPI,
     getServerStatus
-}                             = require('hasta-core/mojang')
+}                             = require('helios-core/mojang')
 const {
     RestResponseStatus,
     isDisplayableError,
     validateLocalFile
-}                             = require('hasta-core/common')
+}                             = require('helios-core/common')
 const {
     FullRepair,
     DistributionIndexProcessor,
     MojangIndexProcessor,
     downloadFile
-}                             = require('hasta-core/dl')
+}                             = require('helios-core/dl')
 const {
     validateSelectedJvm,
     ensureJavaDirIsRoot,
@@ -25,7 +25,7 @@ const {
     discoverBestJvmInstallation,
     latestOpenJDK,
     extractJdk
-}                             = require('hasta-core/java')
+}                             = require('helios-core/java')
 
 // Internal Requirements
 const DiscordWrapper          = require('./assets/js/discordwrapper')
@@ -164,7 +164,7 @@ document.getElementById('CreatorsMediaButton').onclick = async e => {
 // Bind selected account
 async function fetchSkinAndConvertToBase64(username) {
   try {
-    const skinURL = `https://auth.hastastudios.com.br/skin/${username}.png`;
+    const skinURL = `https://crafatar.com/avatars/${username}.png`;
     const response = await fetch(skinURL);
 
     if (!response.ok) {

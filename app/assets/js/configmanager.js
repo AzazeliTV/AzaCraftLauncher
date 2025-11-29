@@ -1,6 +1,6 @@
 const fs   = require('fs-extra')
 const isDev          = require('./isdev')
-const { LoggerUtil } = require('hasta-core')
+const { LoggerUtil } = require('helios-core')
 const os   = require('os')
 const path = require('path')
 const app = require('@electron/remote').app
@@ -9,7 +9,7 @@ const logger = LoggerUtil.getLogger('ConfigManager')
 
 const sysRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : process.env.HOME)
 
-const dataPath = path.join(sysRoot, '.HastaStudiosLauncher')
+const dataPath = path.join(sysRoot, '.AzaCraftLauncher')
 
 const launcherDir = app.getPath('userData')
 
@@ -43,7 +43,7 @@ async function reloadUsername() {
 
     if (acc && acc.type === 'mojang') {
         const gg = exports.getSelectedAccount();
-        let response = await fetch(`https://auth.hastastudios.com.br/api/yggdrasil/sessionserver/session/minecraft/profile/${gg['uuid']}`);
+        let response = await fetch(`https://sessionserver.mojang.com/session/minecraft/profile/${gg['uuid']}`);
         response = await response.json();
         exports.addMojangAuthAccount(gg['uuid'], gg['accessToken'], response['name'], response['name']);
     }

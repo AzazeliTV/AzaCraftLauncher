@@ -1,4 +1,4 @@
-const { LoggerUtil } = require('hasta-core');
+const { LoggerUtil } = require('helios-core');
 const { Client } = require('discord-rpc-patch');
 const Lang = require('./langloader');
 
@@ -35,8 +35,8 @@ exports.initRPC = function(genSettings, servSettings, initialDetails = Lang.quer
         startTimestamp: new Date().getTime(),
         instance: false,
         buttons: [
-            { label: 'Website', url: 'https://hastastudios.com.br' },
-            { label: 'Discord', url: 'https://discord.gg/hastastudios' }
+            { label: 'Website', url: 'https://azacraft.de' },
+            { label: 'Discord', url: 'https://discord.gg/azacraft' }
         ],
     };
 

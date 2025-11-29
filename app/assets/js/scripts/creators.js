@@ -143,7 +143,7 @@ function addCloseButton(container) {
 
 async function fetchCreatorsData() {
     try {
-        const response = await fetch(`https://hastastudios.com.br/creators.json?nocache=${new Date().getTime()}`);
+        const response = await fetch(`https://launcher.azacraft.de/creators.json?nocache=${new Date().getTime()}`);
         if (!response.ok) throw new Error(`Error loading JSON: ${response.status}`);
         return await response.json();
     } catch (error) {

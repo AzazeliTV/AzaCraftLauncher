@@ -2,8 +2,8 @@ const AdmZip                = require('adm-zip')
 const child_process         = require('child_process')
 const crypto                = require('crypto')
 const fs                    = require('fs-extra')
-const { LoggerUtil }        = require('hasta-core')
-const { getMojangOS, isLibraryCompatible, mcVersionAtLeast }  = require('hasta-core/common')
+const { LoggerUtil }        = require('helios-core')
+const { getMojangOS, isLibraryCompatible, mcVersionAtLeast }  = require('helios-core/common')
 const { Type }              = require('helios-distribution-types')
 const os                    = require('os')
 const path                  = require('path')
@@ -368,7 +368,7 @@ class ProcessBuilder {
 
         // Java Arguments
         if(process.platform === 'darwin'){
-            args.push('-Xdock:name=HastaStudiosLauncher')
+            args.push('-Xdock:name=AzaCraftLauncher')
             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
         }
         args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
@@ -462,46 +462,36 @@ class ProcessBuilder {
             if(isDev){
                 
             if (current.type === 'microsoft') {
-                args.push('-Xdock:name=HastaStudioslauncher')
+                args.push('-Xdock:name=AzaCraftLauncher')
                 args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
                 args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
                 args.push('-Xms' + ConfigManager.getMinRAM(this.server.rawServer.id))
                 args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
             } else {
-            args.push('-Xdock:name=HastaStudioslauncher')
+            args.push('-Xdock:name=AzaCraftLauncher')
             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
             args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
             args.push('-Xms' + ConfigManager.getMinRAM(this.server.rawServer.id))
             args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
             args.push('-Duser.language=es')
             args.push('-Dminecraft.api.env=custom')
-            args.push('-Dminecraft.api.auth.host=https://auth.hastastudios.com.br/api/yggdrasil/authserver')
-            args.push('-Dminecraft.api.account.host=https://auth.hastastudios.com.br/api/yggdrasil/api')
-            args.push('-Dminecraft.api.session.host=https://auth.hastastudios.com.br/api/yggdrasil/sessionserver')
-            args.push('-Dminecraft.api.services.host=https://auth.hastastudios.com.br/api/yggdrasil/minecraftservices')
-        //    args.push(`-javaagent:${path.join(process.cwd(), 'libraries', 'java', 'HastaAuth.jar')}=https://auth.hastastudios.com.br/api/yggdrasil`)
         //    args.push('-Dauthlibinjector.yggdrasil.prefetched=eyJtZXRhIjp7InNlcnZlck5hbWUiOiJaZWx0aG9yaWFpIFNNUCIsImltcGxlbWVudGF0aW9uTmFtZSI6IllnZ2RyYXNpbCBBUEkgZm9yIEJsZXNzaW5nIFNraW4iLCJpbXBsZW1lbnRhdGlvblZlcnNpb24iOiI1LjIuMSIsImxpbmtzIjp7ImhvbWVwYWdlIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZCIsInJlZ2lzdGVyIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZFwvYXV0aFwvcmVnaXN0ZXIifSwiZmVhdHVyZS5ub25fZW1haWxfbG9naW4iOnRydWV9LCJza2luRG9tYWlucyI6WyJhdXRoLnplbHRob3JpYWlzbXAuY2xvdWQiXSwic2lnbmF0dXJlUHVibGlja2V5IjoiLS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBeUJpT3NQajVJd043NldXNGFWeldcblJXdVZKaVpHRUl6eWdzRGYyTWtXQ2xQbVk5S1FQM3RTYVJyK3FsZUhCRU9KMWhnZjNwbUJ5OFVuWjFNV3FJeU9cbkY5cTM1Rk4wV3hrVExQTVZLWkl3dkxZRk9GMUZwNWJheDZQRmhRbUJpU2xYelwvcHA1QmQyOHlrVkJOMWFUM1FQXG5zN0I3TDAxWnFxZlZNYzJNcHB0TUNpYmhsTU9xajFFcjVDdWwxSWJzYlJkbjdFOWl5QzVmdEZkR1BDK0F1OHpSXG5YWHhCdm1zbXZBSmliQmQzZU02dlBHRjJBNkxRbURIOHpGUU1NTlhUQWw3VG1PVjNmczR0Vmw0YThQNVJnSXFqXG5GM0JWVzNvYjlNTHJDTGs0MUpUTkZkYWthYjZCWlJSYjg2NndNN3UxXC9IcnlweU9idnV4NytKb3R6MnpMcFUzeFxuY25rZEZqQzFvYnZKd3pOQkhSXC8yc2hubWlmZ2RHZGRKbnVrN1hjRGkzeDh5cGJYcVNXQkJoZGxMRGc0emFYVjBcblhTa29YUUt2MTAzbUVTcVlUMEh5RjFwNzc2WnJJVnczR0R2c3BhRGxzYU13d01JRlFkN0toSitsMjl4clR0NEhcbjZtQWlVeGtNd1wvWEI4am82djc0ZklHcjZ5ZUZzTkFGTTBpM2YwODVvNnFjMkdodEVRZWlpVWlsM3EwaHRhRFAxXG4yYjVwdzFlQlJFekRyU2M5MGtuYjRaRUNJK2tPUG9wNzlJK25hNzRoMWNiSW95YnhueGVNOElJb2s0cmZpemlNXG53UzR2WGhxbkVpbTR1NEl0M29qUHNVS1N1UnV0OEhmd0t3MlRTcjlWOWRwV1wvdStsenlEZmpUemd0dG83UXRQRlxub1wvMExRRHE4b1ZSa0ZxYUNKUDhEdzYwQ0F3RUFBUT09XG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS1cbiJ9')
         }
     } else {
         if (current.type === 'microsoft') {
-            args.push('-Xdock:name=HastaStudioslauncher')
+            args.push('-Xdock:name=AzaCraftLauncher')
             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
             args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
             args.push('-Xms' + ConfigManager.getMinRAM(this.server.rawServer.id))
             args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
         } else {
-        args.push('-Xdock:name=HastaStudioslauncher')
+        args.push('-Xdock:name=AzaCraftLauncher')
         args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
         args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
         args.push('-Xms' + ConfigManager.getMinRAM(this.server.rawServer.id))
         args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
         args.push('-Duser.language=es')
         args.push('-Dminecraft.api.env=custom')
-        args.push('-Dminecraft.api.auth.host=https://auth.hastastudios.com.br/api/yggdrasil/authserver')
-        args.push('-Dminecraft.api.account.host=https://auth.hastastudios.com.br/api/yggdrasil/api')
-        args.push('-Dminecraft.api.session.host=https://auth.hastastudios.com.br/api/yggdrasil/sessionserver')
-        args.push('-Dminecraft.api.services.host=https://auth.hastastudios.com.br/api/yggdrasil/minecraftservices')
-       // args.push(`-javaagent:${path.join(appPath, 'Contents', 'Resources', 'libraries', 'java', 'HastaAuth.jar')}=https://auth.hastastudios.com.br/api/yggdrasil`)
        // args.push('-Dauthlibinjector.yggdrasil.prefetched=eyJtZXRhIjp7InNlcnZlck5hbWUiOiJaZWx0aG9yaWFpIFNNUCIsImltcGxlbWVudGF0aW9uTmFtZSI6IllnZ2RyYXNpbCBBUEkgZm9yIEJsZXNzaW5nIFNraW4iLCJpbXBsZW1lbnRhdGlvblZlcnNpb24iOiI1LjIuMSIsImxpbmtzIjp7ImhvbWVwYWdlIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZCIsInJlZ2lzdGVyIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZFwvYXV0aFwvcmVnaXN0ZXIifSwiZmVhdHVyZS5ub25fZW1haWxfbG9naW4iOnRydWV9LCJza2luRG9tYWlucyI6WyJhdXRoLnplbHRob3JpYWlzbXAuY2xvdWQiXSwic2lnbmF0dXJlUHVibGlja2V5IjoiLS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBeUJpT3NQajVJd043NldXNGFWeldcblJXdVZKaVpHRUl6eWdzRGYyTWtXQ2xQbVk5S1FQM3RTYVJyK3FsZUhCRU9KMWhnZjNwbUJ5OFVuWjFNV3FJeU9cbkY5cTM1Rk4wV3hrVExQTVZLWkl3dkxZRk9GMUZwNWJheDZQRmhRbUJpU2xYelwvcHA1QmQyOHlrVkJOMWFUM1FQXG5zN0I3TDAxWnFxZlZNYzJNcHB0TUNpYmhsTU9xajFFcjVDdWwxSWJzYlJkbjdFOWl5QzVmdEZkR1BDK0F1OHpSXG5YWHhCdm1zbXZBSmliQmQzZU02dlBHRjJBNkxRbURIOHpGUU1NTlhUQWw3VG1PVjNmczR0Vmw0YThQNVJnSXFqXG5GM0JWVzNvYjlNTHJDTGs0MUpUTkZkYWthYjZCWlJSYjg2NndNN3UxXC9IcnlweU9idnV4NytKb3R6MnpMcFUzeFxuY25rZEZqQzFvYnZKd3pOQkhSXC8yc2hubWlmZ2RHZGRKbnVrN1hjRGkzeDh5cGJYcVNXQkJoZGxMRGc0emFYVjBcblhTa29YUUt2MTAzbUVTcVlUMEh5RjFwNzc2WnJJVnczR0R2c3BhRGxzYU13d01JRlFkN0toSitsMjl4clR0NEhcbjZtQWlVeGtNd1wvWEI4am82djc0ZklHcjZ5ZUZzTkFGTTBpM2YwODVvNnFjMkdodEVRZWlpVWlsM3EwaHRhRFAxXG4yYjVwdzFlQlJFekRyU2M5MGtuYjRaRUNJK2tPUG9wNzlJK25hNzRoMWNiSW95YnhueGVNOElJb2s0cmZpemlNXG53UzR2WGhxbkVpbTR1NEl0M29qUHNVS1N1UnV0OEhmd0t3MlRTcjlWOWRwV1wvdStsenlEZmpUemd0dG83UXRQRlxub1wvMExRRHE4b1ZSa0ZxYUNKUDhEdzYwQ0F3RUFBUT09XG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS1cbiJ9')
         }
     }
@@ -520,11 +510,6 @@ class ProcessBuilder {
             args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
         args.push('-Duser.language=es')
         args.push('-Dminecraft.api.env=custom')
-        args.push('-Dminecraft.api.auth.host=https://auth.hastastudios.com.br/api/yggdrasil/authserver')
-        args.push('-Dminecraft.api.account.host=https://auth.hastastudios.com.br/api/yggdrasil/api')
-        args.push('-Dminecraft.api.session.host=https://auth.hastastudios.com.br/api/yggdrasil/sessionserver')
-        args.push('-Dminecraft.api.services.host=https://auth.hastastudios.com.br/api/yggdrasil/minecraftservices')
-       // args.push(`-javaagent:${path.join(process.cwd(), 'libraries', 'java', 'HastaAuth.jar')}=https://auth.hastastudios.com.br/api/yggdrasil`)
         //args.push('-Dauthlibinjector.yggdrasil.prefetched=eyJtZXRhIjp7InNlcnZlck5hbWUiOiJaZWx0aG9yaWFpIFNNUCIsImltcGxlbWVudGF0aW9uTmFtZSI6IllnZ2RyYXNpbCBBUEkgZm9yIEJsZXNzaW5nIFNraW4iLCJpbXBsZW1lbnRhdGlvblZlcnNpb24iOiI1LjIuMSIsImxpbmtzIjp7ImhvbWVwYWdlIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZCIsInJlZ2lzdGVyIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZFwvYXV0aFwvcmVnaXN0ZXIifSwiZmVhdHVyZS5ub25fZW1haWxfbG9naW4iOnRydWV9LCJza2luRG9tYWlucyI6WyJhdXRoLnplbHRob3JpYWlzbXAuY2xvdWQiXSwic2lnbmF0dXJlUHVibGlja2V5IjoiLS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBeUJpT3NQajVJd043NldXNGFWeldcblJXdVZKaVpHRUl6eWdzRGYyTWtXQ2xQbVk5S1FQM3RTYVJyK3FsZUhCRU9KMWhnZjNwbUJ5OFVuWjFNV3FJeU9cbkY5cTM1Rk4wV3hrVExQTVZLWkl3dkxZRk9GMUZwNWJheDZQRmhRbUJpU2xYelwvcHA1QmQyOHlrVkJOMWFUM1FQXG5zN0I3TDAxWnFxZlZNYzJNcHB0TUNpYmhsTU9xajFFcjVDdWwxSWJzYlJkbjdFOWl5QzVmdEZkR1BDK0F1OHpSXG5YWHhCdm1zbXZBSmliQmQzZU02dlBHRjJBNkxRbURIOHpGUU1NTlhUQWw3VG1PVjNmczR0Vmw0YThQNVJnSXFqXG5GM0JWVzNvYjlNTHJDTGs0MUpUTkZkYWthYjZCWlJSYjg2NndNN3UxXC9IcnlweU9idnV4NytKb3R6MnpMcFUzeFxuY25rZEZqQzFvYnZKd3pOQkhSXC8yc2hubWlmZ2RHZGRKbnVrN1hjRGkzeDh5cGJYcVNXQkJoZGxMRGc0emFYVjBcblhTa29YUUt2MTAzbUVTcVlUMEh5RjFwNzc2WnJJVnczR0R2c3BhRGxzYU13d01JRlFkN0toSitsMjl4clR0NEhcbjZtQWlVeGtNd1wvWEI4am82djc0ZklHcjZ5ZUZzTkFGTTBpM2YwODVvNnFjMkdodEVRZWlpVWlsM3EwaHRhRFAxXG4yYjVwdzFlQlJFekRyU2M5MGtuYjRaRUNJK2tPUG9wNzlJK25hNzRoMWNiSW95YnhueGVNOElJb2s0cmZpemlNXG53UzR2WGhxbkVpbTR1NEl0M29qUHNVS1N1UnV0OEhmd0t3MlRTcjlWOWRwV1wvdStsenlEZmpUemd0dG83UXRQRlxub1wvMExRRHE4b1ZSa0ZxYUNKUDhEdzYwQ0F3RUFBUT09XG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS1cbiJ9')
             }
         } else {
@@ -538,11 +523,6 @@ class ProcessBuilder {
             args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
         args.push('-Duser.language=es')
         args.push('-Dminecraft.api.env=custom')
-        args.push('-Dminecraft.api.auth.host=https://auth.hastastudios.com.br/api/yggdrasil/authserver')
-        args.push('-Dminecraft.api.account.host=https://auth.hastastudios.com.br/api/yggdrasil/api')
-        args.push('-Dminecraft.api.session.host=https://auth.hastastudios.com.br/api/yggdrasil/sessionserver')
-        args.push('-Dminecraft.api.services.host=https://auth.hastastudios.com.br/api/yggdrasil/minecraftservices')
-       // args.push(`-javaagent:${path.join(process.cwd(),'resources', 'libraries', 'java', 'HastaAuth.jar')}=https://auth.hastastudios.com.br/api/yggdrasil`)
         //args.push('-Dauthlibinjector.yggdrasil.prefetched=eyJtZXRhIjp7InNlcnZlck5hbWUiOiJaZWx0aG9yaWFpIFNNUCIsImltcGxlbWVudGF0aW9uTmFtZSI6IllnZ2RyYXNpbCBBUEkgZm9yIEJsZXNzaW5nIFNraW4iLCJpbXBsZW1lbnRhdGlvblZlcnNpb24iOiI1LjIuMSIsImxpbmtzIjp7ImhvbWVwYWdlIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZCIsInJlZ2lzdGVyIjoiaHR0cHM6XC9cL2F1dGguemVsdGhvcmlhaXNtcC5jbG91ZFwvYXV0aFwvcmVnaXN0ZXIifSwiZmVhdHVyZS5ub25fZW1haWxfbG9naW4iOnRydWV9LCJza2luRG9tYWlucyI6WyJhdXRoLnplbHRob3JpYWlzbXAuY2xvdWQiXSwic2lnbmF0dXJlUHVibGlja2V5IjoiLS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBeUJpT3NQajVJd043NldXNGFWeldcblJXdVZKaVpHRUl6eWdzRGYyTWtXQ2xQbVk5S1FQM3RTYVJyK3FsZUhCRU9KMWhnZjNwbUJ5OFVuWjFNV3FJeU9cbkY5cTM1Rk4wV3hrVExQTVZLWkl3dkxZRk9GMUZwNWJheDZQRmhRbUJpU2xYelwvcHA1QmQyOHlrVkJOMWFUM1FQXG5zN0I3TDAxWnFxZlZNYzJNcHB0TUNpYmhsTU9xajFFcjVDdWwxSWJzYlJkbjdFOWl5QzVmdEZkR1BDK0F1OHpSXG5YWHhCdm1zbXZBSmliQmQzZU02dlBHRjJBNkxRbURIOHpGUU1NTlhUQWw3VG1PVjNmczR0Vmw0YThQNVJnSXFqXG5GM0JWVzNvYjlNTHJDTGs0MUpUTkZkYWthYjZCWlJSYjg2NndNN3UxXC9IcnlweU9idnV4NytKb3R6MnpMcFUzeFxuY25rZEZqQzFvYnZKd3pOQkhSXC8yc2hubWlmZ2RHZGRKbnVrN1hjRGkzeDh5cGJYcVNXQkJoZGxMRGc0emFYVjBcblhTa29YUUt2MTAzbUVTcVlUMEh5RjFwNzc2WnJJVnczR0R2c3BhRGxzYU13d01JRlFkN0toSitsMjl4clR0NEhcbjZtQWlVeGtNd1wvWEI4am82djc0ZklHcjZ5ZUZzTkFGTTBpM2YwODVvNnFjMkdodEVRZWlpVWlsM3EwaHRhRFAxXG4yYjVwdzFlQlJFekRyU2M5MGtuYjRaRUNJK2tPUG9wNzlJK25hNzRoMWNiSW95YnhueGVNOElJb2s0cmZpemlNXG53UzR2WGhxbkVpbTR1NEl0M29qUHNVS1N1UnV0OEhmd0t3MlRTcjlWOWRwV1wvdStsenlEZmpUemd0dG83UXRQRlxub1wvMExRRHE4b1ZSa0ZxYUNKUDhEdzYwQ0F3RUFBUT09XG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS1cbiJ9')
         }
     }
@@ -642,7 +622,7 @@ class ProcessBuilder {
                             val = args[i].replace(argDiscovery, tempNativePath)
                             break
                         case 'launcher_name':
-                            val = args[i].replace(argDiscovery, 'HastaStudioslauncher')
+                            val = args[i].replace(argDiscovery, 'AzaCraftLauncher')
                             break
                         case 'launcher_version':
                             val = args[i].replace(argDiscovery, this.launcherVersion)
