@@ -1,8 +1,8 @@
 {
-    "name": "HastaStudiosLauncher",
-    "version": "3.1.0",
-    "productName": "Hasta Studios Launcher",
-    "description": "Oficial Laucnher For All Hasta Studios Projects",
+    "name": "AzaCraft-Launcher",
+    "version": "1.0.0",
+    "productName": "AzaCraft Launcher",
+    "description": "",
     "author": "Shisuys (https://github.com/shisuiicaro/)",
     "license": "UNLICENSED",
     "homepage": "https://github.com/Shisuiicaro/HastaStudiosLauncher",
@@ -46,6 +46,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Shisuiicaro/HastaStudiosLauncher.git"
+        "url": "git+https://github.com/AzazeliTV/AzaCraftLauncher"
     }
 }

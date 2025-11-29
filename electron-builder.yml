@@ -1,8 +1,8 @@
-appId: 'HastaStudiosLauncher'
-productName: 'Hasta Studios Launcher'
+appId: 'AzaCraftlauncher'
+productName: 'AzaCraft Launcher'
 artifactName: '${productName}-setup-${version}.${ext}'
 
-copyright: 'Copyright © 2018-2024 Shisuys'
+copyright: 'Copyright © 2025 AzaCraft'
 
 asar: true
 compression: 'maximum'
@@ -40,10 +40,10 @@ mac:
 # Linux Configuration
 linux: 
   target: 'AppImage'
-  maintainer: 'Shisuys'
-  vendor: 'Shisuys'
-  synopsis: 'Hasta Studios Minecraft Launcher'
-  description: 'Oficial Laucnher For All Hasta Studios Projects'
+  maintainer: 'AzazeliTV'
+  vendor: 'AzazeliTV'
+  synopsis: 'AzaCraft Minecraft Launcher'
+  description: 'Official Launcher for all AzaCraft Projects'
   category: 'Game'
 
 
